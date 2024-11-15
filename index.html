@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Resume</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .resume {
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .section:hover {
+            background-color: #f8f9fa;
+            cursor: pointer;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        .editable {
+            min-height: 20px;
+            padding: 5px;
+            margin: 5px 0;
+        }
+
+        .editable:focus {
+            outline: 2px solid #3498db;
+            background-color: #fff;
+        }
+
+        .add-item-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .add-item-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .delete-btn {
+            float: right;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 18px;
+            visibility: hidden;
+        }
+
+        .section:hover .delete-btn {
+            visibility: visible;
+        }
+        body{
+            background-color: black;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+            }
+            .resume {
+                box-shadow: none;
+            }
+            .add-item-btn, .delete-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="resume">
+        <div class="section" id="header">
+            <h1 class="editable" contenteditable="true">Your Name</h1>
+            <p class="editable" contenteditable="true">Email: your.email@example.com</p>
+            <p class="editable" contenteditable="true">Phone: (123) 456-7890</p>
+            <p class="editable" contenteditable="true">Location: City, Country</p>
+        </div>
+
+        <div class="section" id="summary">
+            <center>
+
+                <h2>Professional Summary</h2>
+            </center>
+            <p class="editable" contenteditable="true">A brief professional summary highlighting your key strengths and career objectives.</p>
+        </div>
+
+        <div class="section" id="experience">
+            <center>
+
+                <h2>Work Experience</h2>
+            </center>
+            <div class="experience-item">
+                <h3 class="editable" contenteditable="true">Job Title</h3>
+                <p class="editable" contenteditable="true">Company Name | 2020 - Present</p>
+                <ul>
+                    <li class="editable" contenteditable="true">Key responsibility or achievement 1</li>
+                    <li class="editable" contenteditable="true">Key responsibility or achievement 2</li>
+                </ul>
+            </div>
+            <button class="add-item-btn" onclick="addExperienceItem()">Add Experience</button>
+        </div>
+
+        <div class="section" id="education">
+            <center>
+            <h2>Education</h2>
+
+            </center>
+            <div class="education-item">
+                <h3 class="editable" contenteditable="true">Degree Name</h3>
+                <p class="editable" contenteditable="true">University Name | Graduation Year</p>
+                <p class="editable" contenteditable="true">Additional details (GPA, honors, etc.)</p>
+            </div>
+            <button class="add-item-btn" onclick="addEducationItem()">Add Education</button>
+        </div>
+
+        <div class="section" id="skills">
+            <center>
+
+                <h2>Skills</h2>
+            </center>
+            <div class="skill-item">
+
+                <h3 class="editable" contenteditable="true">Skill Name</h3>
+                <p class="editable" contenteditable="true">Skill </p>
+            </div>
+            <button class="add-item-btn" onclick="addSkillItem()">Add Skill</button>
+        </div>
+    </div>
+
+    <script>
+        function addExperienceItem() {
+            const experienceSection = document.getElementById('experience');
+            const newExperience = document.createElement('div');
+            newExperience.className = 'experience-item';
+            newExperience.innerHTML = `
+                <span class="delete-btn" onclick="deleteItem(this)">×</span>
+                <h3 class="editable" contenteditable="true">Job Title</h3>
+                <p class="editable" contenteditable="true">Company Name | Date - Date</p>
+                <ul>
+                    <li class="editable" contenteditable="true">Key responsibility or achievement</li>
+                    <li class="editable" contenteditable="true">Key responsibility or achievement</li>
+                </ul>
+            `;
+            experienceSection.insertBefore(newExperience, experienceSection.lastElementChild);
+        }
+
+        function addEducationItem() {
+            const educationSection = document.getElementById('education');
+            const newEducation = document.createElement('div');
+            newEducation.className = 'education-item';
+            newEducation.innerHTML = `
+                <span class="delete-btn" onclick="deleteItem(this)">×</span>
+                <h3 class="editable" contenteditable="true">Degree Name</h3>
+                <p class="editable" contenteditable="true">University Name | Graduation Year</p>
+                <p class="editable" contenteditable="true">Additional details (GPA, honors, etc.)</p>
+            `;
+            educationSection.insertBefore(newEducation, educationSection.lastElementChild);
+        }
+
+        function addSkillItem() {
+            const skillSection = document.getElementById('skills');
+            const newSkill = document.createElement('div');
+            newSkill.className = 'skill-item';
+            newSkill.innerHTML = `
+                <span class="delete-btn" onclick="deleteItem(this)">×</span>
+                <h3 class="editable" contenteditable="true">Skill Name</h3>
+                <p class="editable" contenteditable="true">Skill</p>
+            `;
+            skillSection.insertBefore(newSkill, skillSection.lastElementChild);
+        }
+
+        function deleteItem(element) {
+            element.parentElement.remove();
+        }
+
+        // Auto-save functionality
+        let timeoutId;
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('editable')) {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    saveResume();
+                }, 1000);
+            }
+        });
+
+        function saveResume() {
+            const resume = document.querySelector('.resume').innerHTML;
+            localStorage.setItem('savedResume', resume);
+        }
+
+        // Load saved resume
+        window.onload = function() {
+            const savedResume = localStorage.getItem('savedResume');
+            if (savedResume) {
+                document.querySelector('.resume').innerHTML = savedResume;
+            }
+        }
+    </script>
+</body>
+</html>
